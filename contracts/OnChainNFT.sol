@@ -5,11 +5,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
-//import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 //import {Base64} from "./Base64.sol";
 import "hardhat/console.sol";
 
-contract OnChainNFT is ERC721URIStorage {
+
+/// @title OnChainNFT
+/// @notice Implements an on-chain NFT
+contract OnChainNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -18,14 +21,16 @@ contract OnChainNFT is ERC721URIStorage {
     constructor() ERC721("OnChainNFT","ONNFT") {}
 
 
-    //convert SVG image to Base64 string
+    ///@notice convert SVG image to Base64 string
+    ///@return base64 string of svg image
     function formatSVGimageURI(string memory svg) public pure returns (string memory) {
         string memory baseURL = "data:image/svg+xml;base64,";
         string memory base64EncodedSVG = Base64.encode(bytes(svg));
         return string(abi.encodePacked(baseURL, base64EncodedSVG));
     }
 
-    //generate tokenURI as a Base64 string
+    ///@notice generate tokenURI as a Base64 string
+    ///@return base64 string of tokenURI
     function formatTokenURI(string memory imageURI) public pure returns(string memory) {
         string memory baseURL = "data:application/json;base64,";
         string memory json = string(
@@ -39,14 +44,14 @@ contract OnChainNFT is ERC721URIStorage {
 
     }
 
-    function mint(string memory svg) public  returns(uint) {
+    ///@notice mint a new token
+    ///@return tokenId
+    function mint(string memory svg) public onlyOwner returns(uint) {
         string memory imageURI = formatSVGimageURI(svg);
         string memory tokenURI = formatTokenURI(imageURI);
 
         _tokenIds.increment();
-        uint newItemId = _tokenIds.current();
-        // console.log("newItemId is " , newItemId);  
-        // console.log("tokenURI is ", tokenURI);     
+        uint newItemId = _tokenIds.current(); 
 
         _safeMint(msg.sender, newItemId);
 
