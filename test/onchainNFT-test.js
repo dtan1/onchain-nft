@@ -31,17 +31,17 @@ describe("OnChainNFT", function () {
         console.log("----------------------")
 
 
-        it("should format imageURI correctly ", async function () {
-          const imageURI = await onChainNFT.formatSVGimageURI(svg);
-          console.log("imageURI is " + imageURI);
+        // it("should format imageURI correctly ", async function () {
+        //   const imageURI = await onChainNFT.formatSVGimageURI(svg);
+        //   console.log("imageURI is " + imageURI);
   
-        });
+        // });
   
-        it("should format tokenURI correctly ", async function () {
-            const tokenURI = await onChainNFT.formatTokenURI(svg);
-            console.log("tokenURI is " + tokenURI);
+        // it("should format tokenURI correctly ", async function () {
+        //     const tokenURI = await onChainNFT.formatTokenURI(svg);
+        //     console.log("tokenURI is " + tokenURI);
     
-        });
+        // });
 
 
         it("should mint NFT correctly ", async function () {

@@ -23,7 +23,7 @@ contract OnChainNFT is ERC721URIStorage, Ownable {
 
     ///@notice convert SVG image to Base64 string
     ///@return base64 string of svg image
-    function formatSVGimageURI(string memory svg) public pure returns (string memory) {
+    function formatSVGimageURI(string memory svg) internal pure returns (string memory) {
         string memory baseURL = "data:image/svg+xml;base64,";
         string memory base64EncodedSVG = Base64.encode(bytes(svg));
         return string(abi.encodePacked(baseURL, base64EncodedSVG));
@@ -31,7 +31,7 @@ contract OnChainNFT is ERC721URIStorage, Ownable {
 
     ///@notice generate tokenURI as a Base64 string
     ///@return base64 string of tokenURI
-    function formatTokenURI(string memory imageURI) public pure returns(string memory) {
+    function formatTokenURI(string memory imageURI) internal pure returns(string memory) {
         string memory baseURL = "data:application/json;base64,";
         string memory json = string(
                 abi.encodePacked(
